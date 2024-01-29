@@ -61,7 +61,7 @@ export const SignUpForm = () => {
                 <p>Successs!</p>
               </div>
             ),
-            description: data.success + JSON.stringify(values)
+            description: data.success
           })
         }
       })
