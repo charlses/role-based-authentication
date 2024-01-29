@@ -125,7 +125,7 @@ export const LoginForm = () => {
       <CardFooter className='flex-col space-y-4'>
         <SocialLogin />
         <CardDescription>
-          Don't have an account yet?{' '}
+          Don't have an account yet?
           <Link href='/sign-up' className='text-[#f8003f]'>
             Sign up now!
           </Link>
