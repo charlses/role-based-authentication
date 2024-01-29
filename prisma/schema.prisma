@@ -16,31 +16,32 @@ enum UserRole{
 }
 
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  surname String
-  email String @unique
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
   emailVerified DateTime?
-  image String?
-  password String?
-  role UserRole @default(USER)
-  accounts Account[]
+  image         String?
+  password      String?
+  role          UserRole @default(USER)
+  accounts      Account[]
+  isTwoFactorEnabled Boolean @default(false)
 }
 
 model Account {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
-  type String
-  provider String
-  providerAccountID String
-  refresh_token String? 
-  access_token String? 
-  expires_at Int?
-  token_type String?
-  scope String?
-  id_token String? 
-  session_state String?
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.String
+  access_token       String?  @db.String
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.String
+  session_state      String?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountID])
+  @@unique([provider, providerAccountId])
 }

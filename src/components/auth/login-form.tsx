@@ -27,6 +27,7 @@ import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import { signInAction } from '@/server/actions/sign-in'
 import { useTransition } from 'react'
+import { SocialLogin } from './social'
 
 export const LoginForm = () => {
   const { toast } = useToast()
@@ -121,7 +122,8 @@ export const LoginForm = () => {
           </form>
         </Form>
       </CardContent>
-      <CardFooter>
+      <CardFooter className='flex-col space-y-4'>
+        <SocialLogin />
         <CardDescription>
           Don't have an account yet?{' '}
           <Link href='/sign-up' className='text-[#f8003f]'>
