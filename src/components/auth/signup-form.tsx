@@ -1,47 +1,50 @@
 'use client'
-import * as z from 'zod'
-import { Button } from '@/components/ui/button'
+
 import {
   Card,
-  CardHeader,
   CardTitle,
+  CardHeader,
   CardContent,
-  CardFooter,
-  CardDescription
+  CardDescription,
+  CardFooter
 } from '@/components/ui/card'
 import {
   Form,
   FormField,
-  FormItem,
   FormLabel,
   FormControl,
+  FormItem,
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { RegisterSchema } from '@/schemas'
 import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LoginSchema } from '@/schemas'
-import { useToast } from '@/components/ui/use-toast'
-import { CheckCircledIcon } from '@radix-ui/react-icons'
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
-import { signInAction } from '@/server/actions/sign-in'
+import { signUp } from '@/server/actions/sign-up'
 import { useTransition } from 'react'
+import { useToast } from '@/components/ui/use-toast'
+import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
+import { CheckCircledIcon } from '@radix-ui/react-icons'
+import Link from 'next/link'
 
-export const LoginForm = () => {
-  const { toast } = useToast()
+export const SignUpForm = () => {
   const [isPending, startTransition] = useTransition()
+  const { toast } = useToast()
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
+      name: '',
+      surname: '',
       email: '',
       password: ''
     }
   })
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     startTransition(() => {
-      signInAction(values).then((data: any) => {
+      signUp(values).then((data) => {
         if (data.error) {
           toast({
             title: <ExclamationTriangleIcon />,
@@ -58,22 +61,57 @@ export const LoginForm = () => {
                 <p>Successs!</p>
               </div>
             ),
-            description: data.success
+            description: data.success + JSON.stringify(values)
           })
         }
       })
     })
   }
-
   return (
     <Card>
       <CardHeader className='text-center'>
-        <CardTitle>Sign-in</CardTitle>
-        <CardDescription>Sign in to access your account</CardDescription>
+        <CardTitle>Sign-up</CardTitle>
+        <CardDescription>Sign up here to create your account</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+            <FormField
+              control={form.control}
+              name='name'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder='John'
+                      type='text'
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='surname'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Surname</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder='Doe'
+                      type='text'
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name='email'
@@ -116,16 +154,16 @@ export const LoginForm = () => {
               disabled={isPending}
               type='submit'
             >
-              Sign in
+              Sign up
             </Button>
           </form>
         </Form>
       </CardContent>
       <CardFooter>
         <CardDescription>
-          Don't have an account yet?{' '}
-          <Link href='/sign-up' className='text-[#f8003f]'>
-            Sign up now!
+          Already have an account?{' '}
+          <Link href='/sign-in' className='text-[#f8003f]'>
+            Sign in now!
           </Link>
         </CardDescription>
       </CardFooter>
