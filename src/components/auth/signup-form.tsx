@@ -37,7 +37,7 @@ export const SignUpForm = () => {
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       name: '',
-      surname: '',
+      lastname: '',
       email: '',
       password: ''
     }
@@ -96,7 +96,7 @@ export const SignUpForm = () => {
             />
             <FormField
               control={form.control}
-              name='surname'
+              name='lastname'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Surname</FormLabel>

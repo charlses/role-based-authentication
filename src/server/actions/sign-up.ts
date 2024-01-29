@@ -11,7 +11,7 @@ export const signUp = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: 'Something went wrong try again later!' }
   }
 
-  const { name, surname, email, password } = validatedFields.data
+  const { name, lastname, email, password } = validatedFields.data
   const hashedPassword = await bcrypt.hash(password, 10)
 
   const existingUser = await db.user.findUnique({
@@ -26,7 +26,7 @@ export const signUp = async (values: z.infer<typeof RegisterSchema>) => {
   await db.user.create({
     data: {
       name,
-      surname,
+      lastname,
       email,
       password: hashedPassword
     }
