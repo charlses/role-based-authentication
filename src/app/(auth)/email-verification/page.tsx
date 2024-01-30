@@ -1,11 +1,7 @@
 import { VerificationForm } from '@/components/auth/verification-form'
 
 const EmailVerification = () => {
-  return (
-    <div>
-      <VerificationForm />
-    </div>
-  )
+  return <VerificationForm />
 }
 
 export default EmailVerification
