@@ -6,7 +6,13 @@ export const publicRoutes = [
   '/email-verification'
 ]
 
-export const authRoutes = ['/sign-in', '/sign-up', '/auth-error']
+export const authRoutes = [
+  '/sign-in',
+  '/sign-up',
+  '/auth-error',
+  '/forgot-password',
+  '/new-password'
+]
 
 export const apiAuthPrefix = '/api/auth'
 

@@ -111,6 +111,12 @@ export const LoginForm = () => {
                 </FormItem>
               )}
             />
+            <Link
+              href='/forgot-password'
+              className='text-[#f8003f] text-sm font-normal'
+            >
+              Forgot password?
+            </Link>
             <Button
               className='w-full'
               variant='outline'
@@ -126,8 +132,8 @@ export const LoginForm = () => {
         <SocialLogin />
         <CardDescription>
           Don&apos;t have an account yet?
-          <Link href='/sign-up' className='text-[#f8003f]'>
-            Sign up now!
+          <Link href='/sign-in' className='text-[#f8003f]'>
+            Sign in now!
           </Link>
         </CardDescription>
       </CardFooter>

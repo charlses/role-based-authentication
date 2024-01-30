@@ -11,3 +11,14 @@ export const RegisterSchema = z.object({
   email: z.string().email({ message: 'Enter a valid email!' }),
   password: z.string().min(6, { message: 'Password is required!' })
 })
+
+export const ForgotPasswordSchema = z.object({
+  email: z.string().email({ message: 'Enter a valid email!' })
+})
+
+export const NewPasswordSchema = z.object({
+  password: z
+    .string()
+    .min(6, { message: 'Password must include at least 6 characters' }),
+  confirmPassword: z.string().min(6, { message: "Passwords don't match!" })
+})
