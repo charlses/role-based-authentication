@@ -72,7 +72,7 @@ export const VerificationForm = () => {
           description: err
         })
       })
-  }, [token, success, error])
+  }, [toast, token, success, error])
 
   useEffect(() => {
     onSubmit()
