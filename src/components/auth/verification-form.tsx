@@ -17,6 +17,7 @@ import {
   CheckCircledIcon,
   ExclamationTriangleIcon
 } from '@radix-ui/react-icons'
+import { Suspense } from 'react'
 
 export const VerificationForm = () => {
   const { toast } = useToast()
@@ -79,27 +80,29 @@ export const VerificationForm = () => {
   }, [onSubmit])
 
   return (
-    <Card className='text-center'>
-      <CardHeader>
-        <CardTitle>Verify your email!</CardTitle>
-      </CardHeader>
-      <CardContent className='flex flex-col justify-center items-center text-center'>
-        {!success && !error && (
-          <CircleLoader
-            color='#f8003f'
-            loading
-            size={40}
-            speedMultiplier={0.7}
-          />
-        )}
-        {success}
-        {!success && error}
-      </CardContent>
-      <CardFooter className='flex-col items-center'>
-        <Link href='/sign-in'>
-          <Button variant='outline'>Back to sign in!</Button>
-        </Link>
-      </CardFooter>
-    </Card>
+    <Suspense>
+      <Card className='text-center'>
+        <CardHeader>
+          <CardTitle>Verify your email!</CardTitle>
+        </CardHeader>
+        <CardContent className='flex flex-col justify-center items-center text-center'>
+          {!success && !error && (
+            <CircleLoader
+              color='#f8003f'
+              loading
+              size={40}
+              speedMultiplier={0.7}
+            />
+          )}
+          {success}
+          {!success && error}
+        </CardContent>
+        <CardFooter className='flex-col items-center'>
+          <Link href='/sign-in'>
+            <Button variant='outline'>Back to sign in!</Button>
+          </Link>
+        </CardFooter>
+      </Card>
+    </Suspense>
   )
 }
