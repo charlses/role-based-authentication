@@ -1,4 +1,5 @@
 'use client'
+
 import { CircleLoader } from 'react-spinners'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
@@ -17,19 +18,19 @@ import {
   CheckCircledIcon,
   ExclamationTriangleIcon
 } from '@radix-ui/react-icons'
-import { Suspense } from 'react'
 
 export const VerificationForm = () => {
   const { toast } = useToast()
 
-  const [success, setSuccess] = useState('')
-  const [error, setError] = useState('')
+  const [success, setSuccess] = useState<string | undefined>()
+  const [error, setError] = useState<string | undefined>()
 
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
 
   const onSubmit = useCallback(() => {
     if (success || error) return
+
     if (!token) {
       toast({
         title: <ExclamationTriangleIcon />,
@@ -81,29 +82,27 @@ export const VerificationForm = () => {
   }, [onSubmit])
 
   return (
-    <Suspense fallback={<>Loading initial data...</>}>
-      <Card className='text-center'>
-        <CardHeader>
-          <CardTitle>Verify your email!</CardTitle>
-        </CardHeader>
-        <CardContent className='flex flex-col justify-center items-center text-center'>
-          {!success && !error && (
-            <CircleLoader
-              color='#f8003f'
-              loading
-              size={40}
-              speedMultiplier={0.7}
-            />
-          )}
-          {success}
-          {!success && error}
-        </CardContent>
-        <CardFooter className='flex-col items-center'>
-          <Link href='/sign-in'>
-            <Button variant='outline'>Back to sign in!</Button>
-          </Link>
-        </CardFooter>
-      </Card>
-    </Suspense>
+    <Card className='text-center'>
+      <CardHeader>
+        <CardTitle>Verify your email!</CardTitle>
+      </CardHeader>
+      <CardContent className='flex flex-col justify-center items-center text-center'>
+        {!success && !error && (
+          <CircleLoader
+            color='#f8003f'
+            loading
+            size={40}
+            speedMultiplier={0.7}
+          />
+        )}
+        {success}
+        {!success && error}
+      </CardContent>
+      <CardFooter className='flex-col items-center'>
+        <Link href='/sign-in'>
+          <Button variant='outline'>Back to sign in!</Button>
+        </Link>
+      </CardFooter>
+    </Card>
   )
 }
