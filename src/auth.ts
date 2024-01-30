@@ -45,7 +45,7 @@ export const {
       }
 
       if (token.role && session.user) {
-        session.user.role = token.role as UserRole
+        session.user.role = token.role
       }
 
       return session
@@ -57,6 +57,9 @@ export const {
 
       if (!existingUser) return token
 
+      if (existingUser) {
+        token.role = existingUser.role
+      }
       return token
     }
   },
