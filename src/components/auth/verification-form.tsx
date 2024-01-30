@@ -21,6 +21,7 @@ import { Suspense } from 'react'
 
 export const VerificationForm = () => {
   const { toast } = useToast()
+
   const [success, setSuccess] = useState('')
   const [error, setError] = useState('')
 
@@ -80,7 +81,7 @@ export const VerificationForm = () => {
   }, [onSubmit])
 
   return (
-    <Suspense>
+    <Suspense fallback={<>Loading initial data...</>}>
       <Card className='text-center'>
         <CardHeader>
           <CardTitle>Verify your email!</CardTitle>
