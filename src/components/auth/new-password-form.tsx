@@ -21,10 +21,18 @@ import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-
 import { useToast } from '../ui/use-toast'
+import { useSearchParams } from 'next/navigation'
+import { setNewPassword } from '@/server/actions/new-password'
+import {
+  CheckCircledIcon,
+  ExclamationTriangleIcon
+} from '@radix-ui/react-icons'
 
 export const NewPasswordForm = () => {
+  const searchParams = useSearchParams()
+  const token = searchParams.get('token')
+
   const { toast } = useToast()
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
@@ -33,7 +41,29 @@ export const NewPasswordForm = () => {
       confirmPassword: ''
     }
   })
-  const onSubmit = () => {}
+  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
+    setNewPassword(values, token).then((data: any) => {
+      if (data.error) {
+        toast({
+          title: <ExclamationTriangleIcon />,
+          variant: 'destructive',
+          description: data.error
+        })
+      }
+
+      if (data.success) {
+        toast({
+          title: (
+            <div className='inline-flex text-green-400 space-x-1'>
+              <CheckCircledIcon className='mt-1' />
+              <p>Successs!</p>
+            </div>
+          ),
+          description: data.success
+        })
+      }
+    })
+  }
   return (
     <Card>
       <CardHeader className='text-center'>
