@@ -4,6 +4,7 @@ import authConfig from '@/auth.config'
 import { db } from '@/lib/db'
 import { getUserById } from '@/server/database/user'
 import { UserRole } from '@prisma/client'
+import { getTwoFactorConfirmationByUserId } from './server/database/two-factor-confirmation'
 
 export const {
   handlers: { GET, POST },
@@ -27,6 +28,7 @@ export const {
     async signIn({ user, account }) {
       //allows users with Oauth providers to access the page
       if (account?.provider !== 'credentials') return true
+
       const existingUser = await getUserById(user.id ?? '')
 
       //prevents signing in non existing users
@@ -37,6 +39,20 @@ export const {
       if (!existingUser.emailVerified) return false
 
       //TODO: Add 2fa check
+
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
+          existingUser.id
+        )
+
+        if (!twoFactorConfirmation) return false
+
+        //Delete two factor confirmation for next sign-in
+        await db.twoFactorConfirmation.delete({
+          where: { id: twoFactorConfirmation.id }
+        })
+      }
+
       return true
     },
     async session({ token, session }: { session: Session; token?: any }) {
