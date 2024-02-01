@@ -47,7 +47,14 @@ export const LoginForm = () => {
     startTransition(() => {
       signInAction(values)
         .then((data) => {
-          if (data?.error) {
+          if (data?.error && data?.comesfrom === '2fa') {
+            form.setValue('code', '')
+            toast({
+              title: <ExclamationTriangleIcon />,
+              variant: 'destructive',
+              description: data.error
+            })
+          } else if (data?.error) {
             form.reset()
             toast({
               title: <ExclamationTriangleIcon />,

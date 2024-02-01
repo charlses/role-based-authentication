@@ -1,7 +1,7 @@
 'use server'
 
-import { LoginSchema } from '@/schemas'
 import * as z from 'zod'
+import { LoginSchema } from '@/schemas'
 import { signIn } from '@/auth'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { AuthError } from 'next-auth'
@@ -15,13 +15,13 @@ import { getTwoFactorConfirmationByUserId } from '../database/two-factor-confirm
 export const signInAction = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values)
   if (!validatedFields.success) {
-    return { error: 'Invalid fields!' }
+    return { error: 'Invalid fields!', comesfrom: 'fields' }
   }
   const { email, password, code } = validatedFields.data
 
   const existingUser = await getUserByEmail(email)
   if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: 'Ivalid credentials' }
+    return { error: 'Ivalid credentials', comesfrom: 'credentials' }
   }
 
   if (!existingUser.emailVerified) {
@@ -44,19 +44,20 @@ export const signInAction = async (values: z.infer<typeof LoginSchema>) => {
       //Todo: verify code
       const twoFactorToken = await getTwoFactorTokenByEmail(existingUser.email)
       if (!twoFactorToken) {
-        return { error: 'Invalid code!' }
+        return { error: 'Invalid code!', comesfrom: '2fa' }
       }
       if (twoFactorToken.token !== code) {
-        return { error: 'Invalid code!' }
+        return { error: 'Invalid code!', comesfrom: '2fa' }
       }
       const hasExpired = new Date(twoFactorToken.expires) < new Date()
 
       if (hasExpired) {
-        return { error: 'Code has expired' }
+        return { error: 'Code has expired', comesfrom: '2fa' }
       }
       await db.twoFactorToken.delete({
         where: { id: twoFactorToken.id }
       })
+
       const existingConfirmation = await getTwoFactorConfirmationByUserId(
         existingUser.id
       )
