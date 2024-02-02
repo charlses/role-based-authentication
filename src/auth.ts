@@ -38,7 +38,7 @@ export const {
       //prevents signing in without email verification
       if (!existingUser.emailVerified) return false
 
-      //TODO: Add 2fa check
+      //* Added two factor authentication
 
       if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
@@ -52,6 +52,8 @@ export const {
           where: { id: twoFactorConfirmation.id }
         })
       }
+
+      //* Todo: in middleware and in here add Admin dashboard, protected from
 
       return true
     },

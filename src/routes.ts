@@ -14,6 +14,14 @@ export const authRoutes = [
   '/new-password'
 ]
 
+export const adminRoutes = [
+  '/admin/dashboard',
+  '/admin/settings/',
+  '/admin/users',
+  '/admin/products',
+  '/admin/products/create'
+]
+
 export const apiAuthPrefix = '/api/auth'
 
 export const DEFAULT_LOGIN_REDIRECT = '/dashboard'

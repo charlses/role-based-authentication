@@ -92,7 +92,7 @@ export const LoginForm = () => {
   return (
     <Card>
       <CardHeader className='text-center'>
-        <CardTitle>Sign-in</CardTitle>
+        <CardTitle>Sign in</CardTitle>
         <CardDescription>Sign in to access your account</CardDescription>
       </CardHeader>
       <CardContent>
