@@ -1,3 +1,3 @@
 export const AdminDashboard = () => {
-  return <div>Admin Dashboard</div>
+  return <div className='text-2xl'>Admin Dashboard</div>
 }

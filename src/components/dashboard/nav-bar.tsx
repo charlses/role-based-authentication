@@ -2,8 +2,8 @@ import { MainNav } from './main-nav'
 import { Search } from './search'
 import TeamSwitcher from './team-switcher'
 import { UserNav } from './user-nav'
-import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { MobileMenu } from './mobile-menu'
+import { ModeToggle } from '../theme-toggle'
 
 interface NavBarProps {
   name: string
@@ -19,7 +19,7 @@ export const NavBar = ({ name, email, avatarUrl }: NavBarProps) => {
         <TeamSwitcher />
         <MainNav className='mx-6' />
         <div className='ml-auto flex items-center space-x-4'>
-          <Search />
+          <ModeToggle />
           <UserNav name={name} email={email} avatarUrl={avatarUrl} />
         </div>
       </div>

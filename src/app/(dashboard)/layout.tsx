@@ -9,13 +9,13 @@ const ProtectedLayout = async ({ children }: ProtectedLayoutProps) => {
   const session = await auth()
 
   return (
-    <main className=''>
+    <main>
       <NavBar
         name={session?.user?.name ?? ''}
         email={session?.user.email ?? ''}
         avatarUrl={session?.user.image ?? ''}
       />
-      <div className='p-5'>{children}</div>
+      <section className='p-5'>{children}</section>
     </main>
   )
 }
