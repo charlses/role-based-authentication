@@ -1,5 +1,6 @@
 import { auth } from '@/auth'
-import { NavBar } from '@/components/dashboard/nav-bar'
+import { NavBar } from '@/components/navigation/nav-bar'
+import { SideBar } from '@/components/navigation/side-bar'
 
 interface ProtectedLayoutProps {
   children: React.ReactNode
@@ -15,7 +16,11 @@ const ProtectedLayout = async ({ children }: ProtectedLayoutProps) => {
         email={session?.user.email ?? ''}
         avatarUrl={session?.user.image ?? ''}
       />
-      <section className='p-5'>{children}</section>
+      <section className='flex h-screen overflow-hidden'>
+        <div className='flex-1 md:ml-64 h-full overflow-y-auto p-10 pt-20'>
+          {children}
+        </div>
+      </section>
     </main>
   )
 }

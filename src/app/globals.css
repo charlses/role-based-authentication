@@ -56,4 +56,22 @@
   body {
     @apply bg-background text-foreground;
   }
+  ::-webkit-scrollbar {
+    width: 4px; /* width of the entire scrollbar */
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-accent; /* color of the tracking area */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-accent-foreground rounded-md/* color of the scroll thumb */
+     /* roundness of the scroll thumb */;
+  }
+
+  /* Custom scrollbar for Firefox */
+  * {
+    scrollbar-width: 4px; /* "auto" or "thin" */
+    scrollbar-color: #000000 #ff0000; /* thumb and track color */
+  }
 }

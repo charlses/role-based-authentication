@@ -82,7 +82,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
   )
 
   return (
-    <div className='hidden md:flex'>
+    <div className=''>
       <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
