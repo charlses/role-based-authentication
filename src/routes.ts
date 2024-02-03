@@ -22,6 +22,7 @@ export const adminRoutes = [
   '/admin/products/create'
 ]
 
-export const apiAuthPrefix = '/api/auth'
+export const apiAuthPrefix = '/api'
 
 export const DEFAULT_LOGIN_REDIRECT = '/dashboard'
+export const DEFAULT_ADMIN_REDIRECT = '/admin/dashboard'

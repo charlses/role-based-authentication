@@ -2,7 +2,7 @@
 
 import * as z from 'zod'
 import { ForgotPasswordSchema } from '@/schemas'
-import { getUserByEmail } from '../database/user'
+import { getUserByEmail } from '../../database/user'
 import { sendPasswordResetEmail } from '@/lib/mail'
 import { generatePasswordResetToken } from '@/lib/tokens'
 

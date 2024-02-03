@@ -12,7 +12,7 @@ import {
   CardFooter
 } from '../ui/card'
 import { useCallback, useEffect, useState } from 'react'
-import { emailVerification } from '@/server/actions/email-verification'
+import { emailVerification } from '@/server/actions/auth/email-verification'
 import { useToast } from '../ui/use-toast'
 import {
   CheckCircledIcon,

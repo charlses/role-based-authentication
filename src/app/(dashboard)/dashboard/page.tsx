@@ -1,16 +1,15 @@
-import { auth, signOut } from '@/auth'
-import { NavBar } from '@/components/dashboard/nav-bar'
+import { auth } from '@/auth'
+import { ClientDashboard } from '@/components/client/ClientDashboardPage'
+import { AdminDashboard } from '@/components/admin/AdminDashboardPage'
+import { NextResponse } from 'next/server'
 const DashboardPage = async () => {
   const session = await auth()
-  return (
-    <div>
-      <p>{session?.user.id}</p>
-      <p>{session?.user.name}</p>
-      <p>{session?.user.email}</p>
-      <p>{session?.user?.image}</p>
-      <p>{session?.user.role}</p>
-    </div>
-  )
+  if (session?.user.role === 'ADMIN') {
+    return <AdminDashboard />
+  }
+  if (session?.user.role === 'USER') {
+    return <ClientDashboard />
+  }
 }
 
 export default DashboardPage

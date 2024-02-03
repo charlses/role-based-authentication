@@ -17,7 +17,7 @@ interface UserNavProps {
   email: string
   avatarUrl: string
 }
-import { logOut } from '@/server/actions/sign-out'
+import { logOut } from '@/server/actions/auth/sign-out'
 
 export function UserNav({ name, email, avatarUrl }: UserNavProps) {
   return (

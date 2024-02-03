@@ -21,7 +21,7 @@ import { useForm } from 'react-hook-form'
 import { ForgotPasswordSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '../ui/button'
-import { resetPassword } from '@/server/actions/reset-password'
+import { resetPassword } from '@/server/actions/auth/reset-password'
 import { useToast } from '../ui/use-toast'
 import {
   CheckCircledIcon,

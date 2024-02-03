@@ -8,9 +8,9 @@ import { AuthError } from 'next-auth'
 import { generateVerificationToken, generateTwoFactorToken } from '@/lib/tokens'
 import { getUserByEmail } from '@/server/database/user'
 import { sendVerificationEmail, sendTwoFactorTokenEmail } from '@/lib/mail'
-import { getTwoFactorTokenByEmail } from '../database/two-factor-token'
+import { getTwoFactorTokenByEmail } from '../../database/two-factor-token'
 import { db } from '@/lib/db'
-import { getTwoFactorConfirmationByUserId } from '../database/two-factor-confirmation'
+import { getTwoFactorConfirmationByUserId } from '../../database/two-factor-confirmation'
 
 export const signInAction = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values)
