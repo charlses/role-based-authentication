@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
 import {
@@ -9,6 +9,7 @@ import {
   HamburgerMenuIcon,
   GearIcon,
   LockClosedIcon,
+  CrumpledPaperIcon,
   PersonIcon
 } from '@radix-ui/react-icons'
 
@@ -17,8 +18,9 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 
 export const SideBar = () => {
   const [isOpen, setOpen] = useState(false)
-  const router = useRouter()
+
   const pathName = usePathname()
+
   const handleRouteChange = () => {
     setOpen(false)
   }
@@ -84,6 +86,15 @@ export const SideBar = () => {
                   Overview
                 </Button>
               </Link>
+              <Link href='/boards'>
+                <Button
+                  variant={`${isActive('/boards') ? 'secondary' : 'ghost'}`}
+                  className='w-full justify-start'
+                >
+                  <CrumpledPaperIcon className='mr-3' />
+                  Board
+                </Button>
+              </Link>
               <Link href='/settings'>
                 <Button
                   variant={`${isActive('/settings') ? 'secondary' : 'ghost'}`}
@@ -93,7 +104,7 @@ export const SideBar = () => {
                   Settings
                 </Button>
               </Link>
-              <Link href='/users'>
+              <Link href='/'>
                 <Button
                   variant={`${isActive('/users') ? 'secondary' : 'ghost'}`}
                   className='w-full justify-start'

@@ -33,3 +33,18 @@ export const NewPasswordSchema = z
       })
     }
   })
+
+export const BoardSchema = z.object({
+  title: z
+    .string()
+    .min(3, { message: 'The title should be at least 3 characters!' }),
+  userId: z.string().min(1, { message: 'No user id provided!' })
+})
+
+export const UpdateBoardSchema = z.object({
+  title: z
+    .string()
+    .min(3, { message: 'The title should include at least 3 characters' }),
+  id: z.string().min(1, { message: 'No id!' }),
+  userId: z.string().min(1, { message: 'No user id is provided!' })
+})

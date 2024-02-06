@@ -17,7 +17,7 @@ const ProtectedLayout = async ({ children }: ProtectedLayoutProps) => {
         avatarUrl={session?.user.image ?? ''}
       />
       <section className='flex h-screen overflow-hidden'>
-        <div className='flex-1 md:ml-64 h-full overflow-y-auto p-10 pt-20'>
+        <div className='flex-1 md:ml-64 h-full overflow-y-auto pt-20'>
           {children}
         </div>
       </section>

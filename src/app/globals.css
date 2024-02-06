@@ -72,6 +72,6 @@
   /* Custom scrollbar for Firefox */
   * {
     scrollbar-width: 4px; /* "auto" or "thin" */
-    scrollbar-color: #000000 #ff0000; /* thumb and track color */
+    scrollbar-color: var(--accent-foreground) var(--accent); /* thumb and track color */
   }
 }

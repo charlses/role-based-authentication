@@ -68,18 +68,61 @@ model ResetPasswordToken {
 
 
 model TwoFactorToken {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  email String
-  token String @unique
-  expires DateTime
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  token       String @unique
+  expires     DateTime
 
   @@unique([email, token])
 }
 
 
 model TwoFactorConfirmation {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String @db.ObjectId
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@unique([userId])
+}
+
+
+
+
+
+model KanbanBoard {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    userId      String @db.ObjectId
+    kanbanList        KanbanList[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+} 
+
+model KanbanList {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    order       Int
+    
+    boardId String @db.ObjectId
+    kanbanListItem  KanbanListItem[]
+
+    board KanbanBoard @relation(fields:[boardId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    @@index([boardId])
+}
+
+model KanbanListItem {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    order       Int
+    
+    listId      String @db.ObjectId
+    list KanbanList @relation(fields:[listId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([listId])
 }

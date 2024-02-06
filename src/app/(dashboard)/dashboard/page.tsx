@@ -1,7 +1,7 @@
 import { auth } from '@/auth'
 import { ClientDashboard } from '@/components/client/ClientDashboardPage'
 import { AdminDashboard } from '@/components/admin/AdminDashboardPage'
-import { NextResponse } from 'next/server'
+
 const DashboardPage = async () => {
   const session = await auth()
   if (session?.user.role === 'ADMIN') {

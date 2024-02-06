@@ -30,6 +30,7 @@ import {
 
 export const ForgotPasswordForm = () => {
   const { toast } = useToast()
+
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
     resolver: zodResolver(ForgotPasswordSchema),
     defaultValues: {
