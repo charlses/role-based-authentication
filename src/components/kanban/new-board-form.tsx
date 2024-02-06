@@ -92,25 +92,6 @@ export const BoardForm = ({ userId }: { userId: string | '' }) => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name='userId'
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      placeholder='userId'
-                      type='text'
-                      {...field}
-                      disabled
-                      readOnly
-                      className='hidden'
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <Button variant='outline' className='w-full' type='submit'>
               Create Board
             </Button>

@@ -58,6 +58,7 @@
   }
   ::-webkit-scrollbar {
     width: 4px; /* width of the entire scrollbar */
+    height: 1px;
   }
 
   ::-webkit-scrollbar-track {
@@ -71,7 +72,7 @@
 
   /* Custom scrollbar for Firefox */
   * {
-    scrollbar-width: 4px; /* "auto" or "thin" */
+    scrollbar-width: thin; /* "auto" or "thin" */
     scrollbar-color: var(--accent-foreground) var(--accent); /* thumb and track color */
   }
 }

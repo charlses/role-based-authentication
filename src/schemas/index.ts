@@ -48,3 +48,10 @@ export const UpdateBoardSchema = z.object({
   id: z.string().min(1, { message: 'No id!' }),
   userId: z.string().min(1, { message: 'No user id is provided!' })
 })
+
+export const KanbanListSchema = z.object({
+  title: z
+    .string()
+    .min(3, { message: 'The title should be at least 3 characters!' }),
+  boardId: z.string().min(1, { message: 'No board id found!' })
+})
