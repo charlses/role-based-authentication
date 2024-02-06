@@ -18,7 +18,7 @@ export const NavBar = ({ name, email, avatarUrl }: NavBarProps) => {
 
         <SideBar />
 
-        <MainNav className='mx-6' />
+        <MainNav className='mx-6 hidden md:flex' />
         <div className='ml-auto flex items-center space-x-4'>
           <ModeToggle />
           <UserNav name={name} email={email} avatarUrl={avatarUrl} />
