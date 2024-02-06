@@ -1,6 +1,5 @@
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
-import { redirect } from 'next/navigation'
 import { ListContainer } from '@/components/kanban/list-container'
 
 interface BoardIdPageProps {
