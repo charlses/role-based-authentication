@@ -45,7 +45,7 @@ export const VerificationForm = () => {
       .catch((err) => {
         toast.error(err)
       })
-  }, [toast, token, success, error])
+  }, [token, success, error])
 
   useEffect(() => {
     onSubmit()

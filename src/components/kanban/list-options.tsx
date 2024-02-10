@@ -44,19 +44,6 @@ export const ListOptions = ({ data, onAddCard }: ListOptions) => {
           <PlusIcon />
           <p className='font-light'>Add a card...</p>
         </Button>
-        //todo: will implement this functionality later on
-        {/* <form>
-          <input hidden name='id' id='id' value={data.id} />
-          <input hidden name='boardId' id='boardId' value={data.boardId} />
-          <Button
-            variant='ghost'
-            size='sm'
-            type='submit'
-            className='rounded-none w-full h-auto p-2 px-5 justify-between font-normal text-sm'>
-            <CopyIcon />
-            <p className='font-light'>Copy list..</p>
-          </Button>
-        </form> */}
         <Separator />
         <Button
           variant='ghost'
