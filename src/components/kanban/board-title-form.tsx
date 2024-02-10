@@ -4,17 +4,10 @@ import * as z from 'zod'
 import { Button } from '@/components/ui/button'
 import { KanbanBoard } from '@prisma/client'
 import { useState } from 'react'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '../ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
 import { Input } from '../ui/input'
 import { useForm } from 'react-hook-form'
-import { BoardSchema, UpdateBoardSchema } from '@/schemas'
+import { UpdateBoardSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { updateBoard } from '@/server/actions/kanban/update-board'
 import {
@@ -78,8 +71,7 @@ export const BoardTitleForm = ({ data }: BoardTitleProps) => {
     return (
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='flex items-center gap-x-2'
-      >
+        className='flex items-center gap-x-2'>
         <Form {...form}>
           <FormField
             control={form.control}
@@ -107,8 +99,7 @@ export const BoardTitleForm = ({ data }: BoardTitleProps) => {
     <Button
       variant='ghost'
       className='font-bold text-lg h-auto w-auto p-1 px-2'
-      onClick={enableEditing}
-    >
+      onClick={enableEditing}>
       {data.title}
     </Button>
   )

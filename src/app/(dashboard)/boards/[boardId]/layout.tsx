@@ -24,7 +24,7 @@ const SingleBoardLayout = async ({
   return (
     <div className='pt-5'>
       <BoardNavBar data={board} />
-      <section className='relative h-full'>{children}</section>
+      <section className='relative h-full pl-2'>{children}</section>
     </div>
   )
 }
