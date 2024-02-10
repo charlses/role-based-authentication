@@ -3,18 +3,14 @@
 import * as z from 'zod'
 import { Button } from '@/components/ui/button'
 import { KanbanBoard } from '@prisma/client'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
 import { Input } from '../ui/input'
 import { useForm } from 'react-hook-form'
 import { UpdateBoardSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { updateBoard } from '@/server/actions/kanban/update-board'
-import {
-  CheckCircledIcon,
-  ExclamationTriangleIcon
-} from '@radix-ui/react-icons'
-import { useToast } from '../ui/use-toast'
+import { toast } from 'sonner'
 
 interface BoardTitleProps {
   data: KanbanBoard
@@ -22,7 +18,7 @@ interface BoardTitleProps {
 
 export const BoardTitleForm = ({ data }: BoardTitleProps) => {
   const [isEditing, setIsEditing] = useState(false)
-  const { toast } = useToast()
+  const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof UpdateBoardSchema>>({
     resolver: zodResolver(UpdateBoardSchema),
@@ -41,29 +37,19 @@ export const BoardTitleForm = ({ data }: BoardTitleProps) => {
   }
 
   const onSubmit = (values: z.infer<typeof UpdateBoardSchema>) => {
-    updateBoard(values).then((data) => {
-      if (data.error) {
-        toast({
-          title: <ExclamationTriangleIcon />,
-          variant: 'destructive',
-          description: data.error
-        })
+    startTransition(() => {
+      updateBoard(values).then((data) => {
+        if (data.error) {
+          toast.error(data.error)
 
-        disableEditing()
-      }
+          disableEditing()
+        }
 
-      if (data.success) {
-        toast({
-          title: (
-            <div className='inline-flex text-green-400 space-x-1'>
-              <CheckCircledIcon className='mt-1' />
-              <p>Successs!</p>
-            </div>
-          ),
-          description: data.success
-        })
-        disableEditing()
-      }
+        if (data.success) {
+          toast.success(data.success)
+          disableEditing()
+        }
+      })
     })
   }
 
@@ -83,7 +69,7 @@ export const BoardTitleForm = ({ data }: BoardTitleProps) => {
                     placeholder='New Board'
                     type='text'
                     {...field}
-                    disabled={false}
+                    disabled={isPending}
                   />
                 </FormControl>
                 <FormMessage />

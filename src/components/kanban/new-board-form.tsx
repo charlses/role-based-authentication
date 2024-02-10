@@ -14,12 +14,7 @@ import { BoardSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { createBoard } from '@/server/actions/kanban/create-board'
-import { useToast } from '@/components/ui/use-toast'
-import {
-  ExclamationTriangleIcon,
-  CheckCircledIcon
-} from '@radix-ui/react-icons'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -28,10 +23,12 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog'
+import { toast } from 'sonner'
 
 export const BoardForm = ({ userId }: { userId: string | '' }) => {
-  const { toast } = useToast()
   const [open, setOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm<z.infer<typeof BoardSchema>>({
     resolver: zodResolver(BoardSchema),
     defaultValues: {
@@ -41,20 +38,15 @@ export const BoardForm = ({ userId }: { userId: string | '' }) => {
   })
 
   const onSubmit = (values: z.infer<typeof BoardSchema>) => {
-    createBoard(values).then((data) => {
-      if (data.error) {
-        toast({
-          title: <ExclamationTriangleIcon />,
-          variant: 'destructive',
-          description: data.error
-        })
-      } else {
-        toast({
-          title: <CheckCircledIcon />,
-          description: data.success
-        })
-        setOpen(false)
-      }
+    startTransition(() => {
+      createBoard(values).then((data) => {
+        if (data.error) {
+          toast.error(data.error)
+        } else {
+          toast.success(data.success)
+          setOpen(false)
+        }
+      })
     })
   }
 
@@ -85,14 +77,18 @@ export const BoardForm = ({ userId }: { userId: string | '' }) => {
                       placeholder='New Board'
                       type='text'
                       {...field}
-                      disabled={false}
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button variant='outline' className='w-full' type='submit'>
+            <Button
+              variant='outline'
+              className='w-full'
+              type='submit'
+              disabled={isPending}>
               Create Board
             </Button>
           </form>

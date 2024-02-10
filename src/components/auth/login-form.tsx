@@ -22,7 +22,7 @@ import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginSchema } from '@/schemas'
-import { useToast } from '@/components/ui/use-toast'
+import { toast } from 'sonner'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import { signInAction } from '@/server/actions/auth/sign-in'
@@ -31,7 +31,6 @@ import { SocialLogin } from './social'
 import { useState } from 'react'
 
 export const LoginForm = () => {
-  const { toast } = useToast()
   const [isPending, startTransition] = useTransition()
   const [showTwoFactor, setShowTwoFactor] = useState(false)
 
@@ -49,42 +48,22 @@ export const LoginForm = () => {
         .then((data) => {
           if (data?.error && data?.comesfrom === '2fa') {
             form.setValue('code', '')
-            toast({
-              title: <ExclamationTriangleIcon />,
-              variant: 'destructive',
-              description: data.error
-            })
-          } else if (data?.error) {
+            toast.error(data.error)
+          } else if (data.error) {
             form.reset()
-            toast({
-              title: <ExclamationTriangleIcon />,
-              variant: 'destructive',
-              description: data.error
-            })
+            toast.success(data.error)
           }
 
           if (data?.success) {
             form.reset()
-            toast({
-              title: (
-                <div className='inline-flex text-green-400 space-x-1'>
-                  <CheckCircledIcon className='mt-1' />
-                  <p>Successs!</p>
-                </div>
-              ),
-              description: data.success
-            })
+            toast.success(data.success)
           }
           if (data?.twoFactor) {
             setShowTwoFactor(true)
           }
         })
         .catch(() => {
-          toast({
-            title: <ExclamationTriangleIcon />,
-            variant: 'destructive',
-            description: 'Something went wrong'
-          })
+          toast.error('Something went wrong!')
         })
     })
   }
@@ -158,8 +137,7 @@ export const LoginForm = () => {
                 />
                 <Link
                   href='/forgot-password'
-                  className='text-[#f8003f] text-sm font-normal'
-                >
+                  className='text-[#f8003f] text-sm font-normal'>
                   Forgot password?
                 </Link>
               </>
@@ -169,8 +147,7 @@ export const LoginForm = () => {
               className='w-full'
               variant='outline'
               disabled={isPending}
-              type='submit'
-            >
+              type='submit'>
               {showTwoFactor ? 'Confirm' : 'Sign in'}
             </Button>
           </form>

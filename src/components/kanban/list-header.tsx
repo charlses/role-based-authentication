@@ -1,7 +1,6 @@
 'use client'
 import { KanbanList } from '@prisma/client'
 import { UpdateListAction } from '@/server/actions/kanban/update-list'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { UpdateListSchema } from '@/schemas'
@@ -14,23 +13,20 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  CheckCircledIcon,
-  ExclamationTriangleIcon
-} from '@radix-ui/react-icons'
-import { useToast } from '../ui/use-toast'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { Button } from '../ui/button'
-
 import { ListOptions } from './list-options'
+import { toast } from 'sonner'
 
 type ListHeader = {
   data: KanbanList
+  onAddCard: () => void
 }
 
-export const ListHeader = ({ data }: ListHeader) => {
+export const ListHeader = ({ data, onAddCard }: ListHeader) => {
   const [isEditing, setIsEditing] = useState(false)
-  const { toast } = useToast()
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm<z.infer<typeof UpdateListSchema>>({
     resolver: zodResolver(UpdateListSchema),
     defaultValues: {
@@ -41,26 +37,18 @@ export const ListHeader = ({ data }: ListHeader) => {
   })
 
   const onSubmit = (values: z.infer<typeof UpdateListSchema>) => {
-    UpdateListAction(values).then((data) => {
-      if (data.error) {
-        toast({
-          title: <ExclamationTriangleIcon />,
-          variant: 'destructive',
-          description: data.error
-        })
-        setIsEditing(false)
-      }
-      if (data.success) {
-        toast({
-          title: (
-            <div className='inline-flex text-green-400 space-x-1'>
-              <CheckCircledIcon className='mt-1' />
-              <p>{data.success}!</p>
-            </div>
-          )
-        })
-        setIsEditing(false)
-      }
+    startTransition(() => {
+      UpdateListAction(values).then((data) => {
+        if (data.error) {
+          toast.error(data.error)
+          setIsEditing(false)
+        }
+        if (data.success) {
+          toast.success(data.success)
+          form.reset()
+          setIsEditing(false)
+        }
+      })
     })
   }
 
@@ -78,7 +66,8 @@ export const ListHeader = ({ data }: ListHeader) => {
                     placeholder='New Board'
                     type='text'
                     {...field}
-                    disabled={false}
+                    disabled={isPending}
+                    className='active:bg-blend-lighten'
                   />
                 </FormControl>
                 <FormMessage />
@@ -94,12 +83,13 @@ export const ListHeader = ({ data }: ListHeader) => {
     <div className='flex justify-between items-center'>
       <Button
         variant='ghost'
+        disabled={isPending}
         onClick={() => {
           setIsEditing(true)
         }}>
         {data.title}
       </Button>
-      <ListOptions data={data} />
+      <ListOptions onAddCard={onAddCard} data={data} />
     </div>
   )
 }

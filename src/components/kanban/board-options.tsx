@@ -5,6 +5,8 @@ import { Popover } from '../ui/popover'
 import { Button } from '../ui/button'
 import { DotsVerticalIcon, TrashIcon } from '@radix-ui/react-icons'
 import { deleteBoard } from '@/server/actions/kanban/delete-board'
+import { toast } from 'sonner'
+import { Separator } from '../ui/separator'
 
 interface BoardOptionProps {
   id: string
@@ -12,7 +14,13 @@ interface BoardOptionProps {
 
 export const BoardOptions = ({ id }: BoardOptionProps) => {
   const deleteBoardWithId = () => {
-    deleteBoard(id)
+    deleteBoard(id).then((data?) => {
+      if (data?.error) {
+        toast.error(data.error)
+      } else {
+        toast.success('Board deleted successfully')
+      }
+    })
   }
   return (
     <Popover>
@@ -21,24 +29,18 @@ export const BoardOptions = ({ id }: BoardOptionProps) => {
           <DotsVerticalIcon />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className='bg-background flex flex-col justify-center p-3 border rounded-md h-[full] mr-2 space-y-2'>
-        <div>
-          <h3 className='text-md font-normal text-accent-foreground'>
-            Board actions
-          </h3>
-          <hr />
-        </div>
-        <div className='inline-flex'>
-          <p className='text-sm font-light mr-2'>Delete this board</p>
-          <Button
-            variant='ghost'
-            size='sm'
-            className='h-auto ml-2 hover:bg-destructive'
-            onClick={deleteBoardWithId}
-          >
-            <TrashIcon className='' />
-          </Button>
-        </div>
+      <PopoverContent className='bg-background flex flex-col justify-center p-3 border rounded-md space-y-2'>
+        <p className='font-bold'>Board actions</p>
+        <Separator />
+
+        <Button
+          variant='ghost'
+          size='sm'
+          onClick={deleteBoardWithId}
+          className='rounded-none w-full h-auto p-2 px-5 justify-between font-normal text-sm'>
+          <p className='font-light '>Delete this board</p>
+          <TrashIcon className='ml-3' />
+        </Button>
       </PopoverContent>
     </Popover>
   )

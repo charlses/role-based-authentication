@@ -1,6 +1,5 @@
 import { MainNav } from './main-nav'
 import { UserNav } from './user-nav'
-import { MobileMenu } from './mobile-menu'
 import { ModeToggle } from '../theme-toggle'
 import { SideBar } from './side-bar'
 

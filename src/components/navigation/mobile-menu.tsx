@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import {
   HamburgerMenuIcon,
-  Cross1Icon,
   DashboardIcon,
   PersonIcon,
   BoxModelIcon,

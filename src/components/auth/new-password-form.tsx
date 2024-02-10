@@ -21,19 +21,18 @@ import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useToast } from '../ui/use-toast'
 import { useSearchParams } from 'next/navigation'
 import { setNewPassword } from '@/server/actions/auth/new-password'
-import {
-  CheckCircledIcon,
-  ExclamationTriangleIcon
-} from '@radix-ui/react-icons'
+import { useTransition } from 'react'
+import { toast } from 'sonner'
+
+import { CheckCircledIcon } from '@radix-ui/react-icons'
 
 export const NewPasswordForm = () => {
   const searchParams = useSearchParams()
+  const [isPending, startTransition] = useTransition()
   const token = searchParams.get('token')
 
-  const { toast } = useToast()
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
@@ -42,26 +41,16 @@ export const NewPasswordForm = () => {
     }
   })
   const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
-    setNewPassword(values, token).then((data: any) => {
-      if (data.error) {
-        toast({
-          title: <ExclamationTriangleIcon />,
-          variant: 'destructive',
-          description: data.error
-        })
-      }
+    startTransition(() => {
+      setNewPassword(values, token).then((data: any) => {
+        if (data.error) {
+          toast.error(data.error)
+        }
 
-      if (data.success) {
-        toast({
-          title: (
-            <div className='inline-flex text-green-400 space-x-1'>
-              <CheckCircledIcon className='mt-1' />
-              <p>Successs!</p>
-            </div>
-          ),
-          description: data.success
-        })
-      }
+        if (data.success) {
+          toast.success(data.success)
+        }
+      })
     })
   }
   return (
@@ -84,7 +73,7 @@ export const NewPasswordForm = () => {
                       placeholder='********'
                       type='password'
                       {...field}
-                      disabled={false}
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />

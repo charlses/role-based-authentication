@@ -22,14 +22,15 @@ import { ForgotPasswordSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '../ui/button'
 import { resetPassword } from '@/server/actions/auth/reset-password'
-import { useToast } from '../ui/use-toast'
+import { useTransition } from 'react'
 import {
   CheckCircledIcon,
   ExclamationTriangleIcon
 } from '@radix-ui/react-icons'
+import { toast } from 'sonner'
 
 export const ForgotPasswordForm = () => {
-  const { toast } = useToast()
+  const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
     resolver: zodResolver(ForgotPasswordSchema),
@@ -39,26 +40,16 @@ export const ForgotPasswordForm = () => {
   })
 
   const onSubmit = (values: z.infer<typeof ForgotPasswordSchema>) => {
-    resetPassword(values).then((data: any) => {
-      if (data.error) {
-        toast({
-          title: <ExclamationTriangleIcon />,
-          variant: 'destructive',
-          description: data.error
-        })
-      }
+    startTransition(() => {
+      resetPassword(values).then((data: any) => {
+        if (data.error) {
+          toast.error(data.error)
+        }
 
-      if (data.success) {
-        toast({
-          title: (
-            <div className='inline-flex text-green-400 space-x-1'>
-              <CheckCircledIcon className='mt-1' />
-              <p>Successs!</p>
-            </div>
-          ),
-          description: data.success
-        })
-      }
+        if (data.success) {
+          toast.success(data.success)
+        }
+      })
     })
   }
 
@@ -85,14 +76,18 @@ export const ForgotPasswordForm = () => {
                       placeholder='example@mail.com'
                       type='email'
                       {...field}
-                      disabled={false}
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button variant='outline' className='w-full' type='submit'>
+            <Button
+              variant='outline'
+              className='w-full'
+              type='submit'
+              disabled={isPending}>
               Reset Password
             </Button>
           </form>

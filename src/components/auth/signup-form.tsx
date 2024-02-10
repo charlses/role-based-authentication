@@ -24,14 +24,12 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signUp } from '@/server/actions/auth/sign-up'
 import { useTransition } from 'react'
-import { useToast } from '@/components/ui/use-toast'
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
-import { CheckCircledIcon } from '@radix-ui/react-icons'
+
 import Link from 'next/link'
+import { toast } from 'sonner'
 
 export const SignUpForm = () => {
   const [isPending, startTransition] = useTransition()
-  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -46,23 +44,11 @@ export const SignUpForm = () => {
     startTransition(() => {
       signUp(values).then((data) => {
         if (data.error) {
-          toast({
-            title: <ExclamationTriangleIcon />,
-            variant: 'destructive',
-            description: data.error
-          })
+          toast.error(data.error)
         }
 
         if (data.success) {
-          toast({
-            title: (
-              <div className='inline-flex text-green-400 space-x-1'>
-                <CheckCircledIcon className='mt-1' />
-                <p>Successs!</p>
-              </div>
-            ),
-            description: data.success
-          })
+          toast.success(data.success)
         }
       })
     })
@@ -152,8 +138,7 @@ export const SignUpForm = () => {
               className='w-full'
               variant='outline'
               disabled={isPending}
-              type='submit'
-            >
+              type='submit'>
               Sign up
             </Button>
           </form>

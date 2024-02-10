@@ -13,15 +13,9 @@ import {
 } from '../ui/card'
 import { useCallback, useEffect, useState } from 'react'
 import { emailVerification } from '@/server/actions/auth/email-verification'
-import { useToast } from '../ui/use-toast'
-import {
-  CheckCircledIcon,
-  ExclamationTriangleIcon
-} from '@radix-ui/react-icons'
+import { toast } from 'sonner'
 
 export const VerificationForm = () => {
-  const { toast } = useToast()
-
   const [success, setSuccess] = useState<string | undefined>()
   const [error, setError] = useState<string | undefined>()
 
@@ -32,48 +26,24 @@ export const VerificationForm = () => {
     if (success || error) return
 
     if (!token) {
-      toast({
-        title: <ExclamationTriangleIcon />,
-        variant: 'destructive',
-        description: "Token doesn't exist"
-      })
+      toast.warning('No valid token found, try again later!')
     }
     emailVerification(token ?? '')
       .then((data: any) => {
         if (data.error) {
           setError(data.error)
-          toast({
-            title: <ExclamationTriangleIcon />,
-            variant: 'destructive',
-            description: data.error
-          })
+          toast.error(data.error)
         }
 
         if (data.success) {
           setSuccess(data.success)
-          toast({
-            title: (
-              <div className='inline-flex text-green-400 space-x-1'>
-                <CheckCircledIcon className='mt-1' />
-                <p>Successs!</p>
-              </div>
-            ),
-            description: data.success
-          })
+          toast.success(data.success)
         }
 
         return data
       })
       .catch((err) => {
-        toast({
-          title: (
-            <div className='inline-flex text-green-400 space-x-1'>
-              <CheckCircledIcon className='mt-1' />
-              <p>Successs!</p>
-            </div>
-          ),
-          description: err
-        })
+        toast.error(err)
       })
   }, [toast, token, success, error])
 

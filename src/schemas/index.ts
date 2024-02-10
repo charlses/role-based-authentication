@@ -61,3 +61,13 @@ export const UpdateListSchema = z.object({
   id: z.string().min(1, { message: 'No id!' }),
   boardId: z.string().min(1, { message: 'No board id found!' })
 })
+
+export const CopyListSchema = z.object({
+  id: z.string(),
+  boardId: z.string()
+})
+
+export const KanbanListItemSchema = z.object({
+  title: z.string().min(1, { message: 'Minimum 1 character!' }),
+  listId: z.string().min(1, { message: 'No list found!' })
+})
