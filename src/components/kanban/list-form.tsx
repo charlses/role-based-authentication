@@ -33,8 +33,10 @@ export const ListForm = ({ boardId }: ListFormProps) => {
         if (data.error) {
           toast.error(data.error)
           stopEditing()
-        } else {
+        }
+        if (data.success) {
           toast.success(data.success)
+          form.reset()
           stopEditing()
         }
       })
@@ -46,6 +48,7 @@ export const ListForm = ({ boardId }: ListFormProps) => {
   }
   const stopEditing = () => {
     setIsEditing(false)
+    form.reset()
   }
 
   if (isEditing) {
@@ -53,7 +56,7 @@ export const ListForm = ({ boardId }: ListFormProps) => {
       <ListWrapper>
         <Form {...form}>
           <form
-            className='space-y-4 w-[250px] rounded-md bg-accent p-1 text-small font-light'
+            className='space-y-4 w-[250px] rounded-md bg-accent p-3 text-small font-light'
             onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
@@ -87,7 +90,7 @@ export const ListForm = ({ boardId }: ListFormProps) => {
   return (
     <ListWrapper>
       <Button
-        className='h-auto w-[240px] text-left p-2'
+        className='h-auto w-[250px] text-left transition p-2 flex items-center font-medium text-sm'
         variant='outline'
         onClick={startEditing}>
         <PlusIcon className='mr-auto h-5 w-5' />

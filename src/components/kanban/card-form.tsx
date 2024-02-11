@@ -38,9 +38,10 @@ export const CardForm = ({
         if (data.error) {
           toast.error(data.error)
         }
-
         if (data.success) {
           toast.success(data.success)
+          form.reset()
+          disableEditing()
         }
       })
     })
@@ -61,7 +62,7 @@ export const CardForm = ({
                       rows={4}
                       {...field}
                       disabled={isPending}
-                      className='border-background focus:border-none active:border-none'
+                      className='border-background focus:border-none active:border-none bg-background'
                     />
                   </FormControl>
                   <FormMessage />

@@ -17,7 +17,7 @@ const SingleBoardPage = async ({ params }: BoardIdPageProps) => {
     orderBy: { order: 'asc' }
   })
   return (
-    <div className='pt-10 h-[calc(screen-16rem)]overflow-x-auto'>
+    <div className='pt-10 h-[calc(screen-16rem)]'>
       <ListContainer boardId={params.boardId} data={lists} />
     </div>
   )

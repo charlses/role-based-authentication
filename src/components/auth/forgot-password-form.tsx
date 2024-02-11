@@ -48,6 +48,7 @@ export const ForgotPasswordForm = () => {
 
         if (data.success) {
           toast.success(data.success)
+          form.reset()
         }
       })
     })

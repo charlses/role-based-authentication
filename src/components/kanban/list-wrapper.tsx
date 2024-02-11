@@ -3,5 +3,5 @@ interface ListWrapperProps {
 }
 
 export const ListWrapper = ({ children }: ListWrapperProps) => {
-  return <li className='shrink-0 h-full w-[275px] select-none'>{children}</li>
+  return <li className='relative min-h-full min-w-[250px]'>{children}</li>
 }

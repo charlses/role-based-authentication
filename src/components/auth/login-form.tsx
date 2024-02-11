@@ -50,8 +50,7 @@ export const LoginForm = () => {
             form.setValue('code', '')
             toast.error(data.error)
           } else if (data.error) {
-            form.reset()
-            toast.success(data.error)
+            toast.error(data.error)
           }
 
           if (data?.success) {

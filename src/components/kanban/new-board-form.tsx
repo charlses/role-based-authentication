@@ -44,6 +44,7 @@ export const BoardForm = ({ userId }: { userId: string | '' }) => {
           toast.error(data.error)
         } else {
           toast.success(data.success)
+          form.reset()
           setOpen(false)
         }
       })

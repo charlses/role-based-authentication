@@ -54,33 +54,35 @@ export const ListHeader = ({ data, onAddCard }: ListHeader) => {
 
   if (isEditing) {
     return (
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Form {...form}>
-          <FormField
-            control={form.control}
-            name='title'
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    placeholder='New Board'
-                    type='text'
-                    {...field}
-                    disabled={isPending}
-                    className='active:bg-blend-lighten'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </Form>
-      </form>
+      <div className='flex justify-between items-center shrink-0'>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <Form {...form}>
+            <FormField
+              control={form.control}
+              name='title'
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder='New Board'
+                      type='text'
+                      {...field}
+                      disabled={isPending}
+                      className='active:bg-blend-lighten'
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </Form>
+        </form>
+      </div>
     )
   }
 
   return (
-    <div className='flex justify-between items-center'>
+    <div className='flex justify-between items-center shrink-0'>
       <Button
         variant='ghost'
         disabled={isPending}

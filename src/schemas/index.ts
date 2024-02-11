@@ -71,3 +71,30 @@ export const KanbanListItemSchema = z.object({
   title: z.string().min(1, { message: 'Minimum 1 character!' }),
   listId: z.string().min(1, { message: 'No list found!' })
 })
+
+export const UpdateListOrderSchema = z.object({
+  items: z.array(
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      order: z.number(),
+      createdAt: z.date(),
+      updatedAt: z.date()
+    })
+  ),
+  boardId: z.string()
+})
+
+export const UpdateCardOrderSchema = z.object({
+  items: z.array(
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      order: z.number(),
+      listId: z.string(),
+      createdAt: z.date(),
+      updatedAt: z.date()
+    })
+  ),
+  boardId: z.string()
+})

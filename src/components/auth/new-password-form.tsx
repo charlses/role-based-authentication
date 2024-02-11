@@ -49,6 +49,7 @@ export const NewPasswordForm = () => {
 
         if (data.success) {
           toast.success(data.success)
+          form.reset()
         }
       })
     })

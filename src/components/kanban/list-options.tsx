@@ -40,7 +40,8 @@ export const ListOptions = ({ data, onAddCard }: ListOptions) => {
         <Button
           variant='ghost'
           size='sm'
-          className='rounded-none w-full h-auto p-2 px-5 justify-between font-normal text-sm'>
+          className='rounded-none w-full h-auto p-2 px-5 justify-between font-normal text-sm'
+          onClick={onAddCard}>
           <PlusIcon />
           <p className='font-light'>Add a card...</p>
         </Button>

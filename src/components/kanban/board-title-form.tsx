@@ -41,12 +41,12 @@ export const BoardTitleForm = ({ data }: BoardTitleProps) => {
       updateBoard(values).then((data) => {
         if (data.error) {
           toast.error(data.error)
-
           disableEditing()
         }
 
         if (data.success) {
           toast.success(data.success)
+          form.reset()
           disableEditing()
         }
       })
