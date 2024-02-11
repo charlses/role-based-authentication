@@ -1,3 +1,4 @@
+'use client'
 import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 import { Popover } from '../ui/popover'
 import { Button } from '../ui/button'
@@ -11,6 +12,7 @@ import { DeleteListAction } from '@/server/actions/kanban/delete-list'
 import { KanbanList } from '@prisma/client'
 import { toast } from 'sonner'
 import { Separator } from '../ui/separator'
+import { useState } from 'react'
 
 interface ListOptions {
   data: KanbanList
@@ -18,17 +20,25 @@ interface ListOptions {
 }
 
 export const ListOptions = ({ data, onAddCard }: ListOptions) => {
+  const [open, setOpen] = useState(false)
   const deleteListWithId = () => {
     DeleteListAction(data.id, data.boardId).then((data) => {
       if (data.error) {
         toast.error(data.error)
-      } else {
+      }
+      if (data.success) {
         toast.success(data.success)
+        setOpen(false)
       }
     })
   }
+  const handleAddCard = () => {
+    onAddCard()
+    setOpen(false)
+  }
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild className='items-end'>
         <Button variant='ghost' size='sm' className='h-auto w-autp p-2'>
           <DotsVerticalIcon />
@@ -41,7 +51,7 @@ export const ListOptions = ({ data, onAddCard }: ListOptions) => {
           variant='ghost'
           size='sm'
           className='rounded-none w-full h-auto p-2 px-5 justify-between font-normal text-sm'
-          onClick={onAddCard}>
+          onClick={handleAddCard}>
           <PlusIcon />
           <p className='font-light'>Add a card...</p>
         </Button>
