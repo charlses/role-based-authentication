@@ -10,7 +10,7 @@ export const updateBoard = async (
 ) => {
   const validatedFields = UpdateBoardSchema.safeParse(values)
   if (!validatedFields.success) {
-    return { error: 'Something went wrong try again later!' }
+    return { error: 'Failed to validate fields!' }
   }
 
   const { id, title, userId } = validatedFields.data
@@ -29,5 +29,5 @@ export const updateBoard = async (
   }
   revalidatePath('/boards')
 
-  return { success: 'Board updated successfully' }
+  return { success: 'Board updated successfully!' }
 }

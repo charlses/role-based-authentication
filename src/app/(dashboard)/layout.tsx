@@ -1,6 +1,5 @@
 import { auth } from '@/auth'
 import { NavBar } from '@/components/navigation/nav-bar'
-import { SideBar } from '@/components/navigation/side-bar'
 
 interface ProtectedLayoutProps {
   children: React.ReactNode

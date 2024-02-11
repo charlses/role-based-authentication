@@ -3,7 +3,6 @@ import { PrismaAdapter } from '@auth/prisma-adapter'
 import authConfig from '@/auth.config'
 import { db } from '@/lib/db'
 import { getUserById } from '@/server/database/user'
-import { UserRole } from '@prisma/client'
 import { getTwoFactorConfirmationByUserId } from './server/database/two-factor-confirmation'
 
 export const {
@@ -53,7 +52,7 @@ export const {
         })
       }
 
-      //* Todo: in middleware and in here add Admin dashboard, protected from
+      //Todo: in middleware and in here add Admin dashboard, protected from
 
       return true
     },

@@ -35,7 +35,6 @@ export const BoardOptions = ({ id }: BoardOptionProps) => {
       <PopoverContent className='bg-background flex flex-col justify-center p-3 border rounded-md space-y-2'>
         <p className='font-bold'>Board actions</p>
         <Separator />
-
         <Button
           variant='ghost'
           size='sm'

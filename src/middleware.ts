@@ -5,7 +5,6 @@ const { auth } = NextAuth(authConfig)
 
 import {
   DEFAULT_LOGIN_REDIRECT,
-  DEFAULT_ADMIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
   publicRoutes
