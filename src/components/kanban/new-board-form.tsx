@@ -24,6 +24,7 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog'
 import { toast } from 'sonner'
+import { PlusIcon } from '@radix-ui/react-icons'
 
 export const BoardForm = ({ userId }: { userId: string | '' }) => {
   const [open, setOpen] = useState(false)
@@ -54,8 +55,11 @@ export const BoardForm = ({ userId }: { userId: string | '' }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant='outline' onClick={() => setOpen(true)}>
-          Create a new board
+        <Button
+          variant='outline'
+          onClick={() => setOpen(true)}
+          className='cursor-pointer'>
+          <PlusIcon className='mr-4' /> Create a new board
         </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>

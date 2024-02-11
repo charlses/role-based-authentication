@@ -11,11 +11,13 @@ const KanbanPage = async () => {
   const boards = await findBoards(userId)
   return (
     <div className='space-y-4 px-4'>
-      <h2>
-        <CrumpledPaperIcon className='inline' /> Your boards
-      </h2>
-      <BoardForm userId={userId} />
-      <section className='space-x-4'>
+      <section className='display flex justify-between items-center'>
+        <h2>
+          <CrumpledPaperIcon className='inline' /> Your boards
+        </h2>
+        <BoardForm userId={userId} />
+      </section>
+      <section className='flex flex-wrap gap-8'>
         {boards.map((board) => (
           <Boards
             key={board.id}

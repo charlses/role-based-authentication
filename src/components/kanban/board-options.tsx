@@ -7,23 +7,26 @@ import { DotsVerticalIcon, TrashIcon } from '@radix-ui/react-icons'
 import { deleteBoard } from '@/server/actions/kanban/delete-board'
 import { toast } from 'sonner'
 import { Separator } from '../ui/separator'
+import { useState } from 'react'
 
 interface BoardOptionProps {
   id: string
 }
 
 export const BoardOptions = ({ id }: BoardOptionProps) => {
+  const [open, setOpen] = useState(false)
   const deleteBoardWithId = () => {
-    deleteBoard(id).then((data?) => {
+    deleteBoard(id).then((data) => {
       if (data?.error) {
         toast.error(data.error)
       } else {
         toast.success('Board deleted successfully')
+        setOpen(false)
       }
     })
   }
   return (
-    <Popover>
+    <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger asChild>
         <Button variant='ghost' size='sm' className='h-auto w-autp p-2'>
           <DotsVerticalIcon />
