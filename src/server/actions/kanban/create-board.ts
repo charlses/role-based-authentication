@@ -33,6 +33,8 @@ export const createBoard = async (values: z.infer<typeof BoardSchema>) => {
       revalidatePath('/boards')
 
       return { success: 'Board added successfully' }
+    } else {
+      return { error: 'You are doing some bad stuff!' }
     }
   } else {
     return { error: 'You need to be authenticated to do this action!' }
