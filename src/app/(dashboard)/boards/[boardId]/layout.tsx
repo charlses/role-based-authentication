@@ -2,6 +2,8 @@ import { auth } from '@/auth'
 import { db } from '@/lib/db'
 import { notFound } from 'next/navigation'
 import { BoardNavBar } from '@/components/kanban/board-nav'
+import { toast } from 'sonner'
+import { redirect } from 'next/navigation'
 
 const SingleBoardLayout = async ({
   children,
@@ -18,7 +20,7 @@ const SingleBoardLayout = async ({
   })
 
   if (!board) {
-    notFound()
+    redirect('/boards')
   }
 
   return (

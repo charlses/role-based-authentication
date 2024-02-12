@@ -3,17 +3,21 @@
 import { db } from '@/lib/db'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { auth } from '@/auth'
 
 export const deleteBoard = async (id: string) => {
-  try {
-    await db.kanbanBoard.delete({
-      where: { id }
-    })
-  } catch (error) {
-    return {
-      error: 'Error deleting board!'
+  const session = await auth()
+  if (session) {
+    try {
+      await db.kanbanBoard.delete({
+        where: { id, userId: session.user.id }
+      })
+    } catch (error) {
+      return {
+        error: 'Error deleting board!'
+      }
     }
+    revalidatePath('/boards')
+    redirect('/boards')
   }
-  revalidatePath('/boards')
-  redirect('/boards')
 }

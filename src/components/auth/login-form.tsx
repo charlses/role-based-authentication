@@ -44,26 +44,22 @@ export const LoginForm = () => {
   })
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
-      signInAction(values)
-        .then((data) => {
-          if (data?.error && data?.comesfrom === '2fa') {
-            form.setValue('code', '')
-            toast.error(data.error)
-          } else if (data.error) {
-            toast.error(data.error)
-          }
+      signInAction(values).then((data) => {
+        if (data?.error && data?.comesfrom === '2fa') {
+          form.setValue('code', '')
+          toast.error(data.error)
+        } else if (data.error) {
+          toast.error(data.error)
+        }
 
-          if (data?.success) {
-            form.reset()
-            toast.success(data.success)
-          }
-          if (data?.twoFactor) {
-            setShowTwoFactor(true)
-          }
-        })
-        .catch(() => {
-          toast.error('Something went wrong!')
-        })
+        if (data?.success) {
+          form.reset()
+          toast.success(data.success)
+        }
+        if (data?.twoFactor) {
+          setShowTwoFactor(true)
+        }
+      })
     })
   }
 
