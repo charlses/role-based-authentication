@@ -18,15 +18,17 @@ const KanbanPage = async () => {
         <BoardForm userId={userId} />
       </section>
       <section className='flex flex-wrap gap-8'>
-        {boards.map((board) => (
-          <Boards
-            key={board.id}
-            title={board.title}
-            id={board.id}
-            userId={board.userId}
-            createdAt={board.createdAt}
-          />
-        ))}
+        {boards &&
+          boards.map((board) => (
+            <Boards
+              key={board.id}
+              title={board.title}
+              id={board.id}
+              userId={board.userId}
+              createdAt={board.createdAt}
+            />
+          ))}
+        {!boards && <p>Create your first board</p>}
       </section>
     </div>
   )
