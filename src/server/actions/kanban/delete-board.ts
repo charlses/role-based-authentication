@@ -19,5 +19,7 @@ export const deleteBoard = async (id: string) => {
     }
     revalidatePath('/boards')
     redirect('/boards')
+  } else {
+    return { error: 'You need to be authenticated to do this action!' }
   }
 }

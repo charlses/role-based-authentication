@@ -35,6 +35,6 @@ export const createBoard = async (values: z.infer<typeof BoardSchema>) => {
       return { success: 'Board added successfully' }
     }
   } else {
-    return { error: 'No session!' }
+    return { error: 'You need to be authenticated to do this action!' }
   }
 }

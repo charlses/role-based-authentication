@@ -18,6 +18,7 @@ const KanbanPage = async () => {
         <BoardForm userId={userId} />
       </section>
       <section className='flex flex-wrap gap-8'>
+        {!boards && <p>Create your first board</p>}
         {boards &&
           boards.map((board) => (
             <Boards
@@ -28,7 +29,6 @@ const KanbanPage = async () => {
               createdAt={board.createdAt}
             />
           ))}
-        {!boards && <p>Create your first board</p>}
       </section>
     </div>
   )

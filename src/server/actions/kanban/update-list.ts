@@ -34,6 +34,6 @@ export const UpdateListAction = async (
 
     return { success: 'List updated successfully' }
   } else {
-    return { error: 'You need to be authenticated to do this action' }
+    return { error: 'You need to be authenticated to do this action!' }
   }
 }

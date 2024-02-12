@@ -43,6 +43,6 @@ export const updateCardOrder = async (
       success: 'Kanban cards reordered successfully'
     }
   } else {
-    return { error: 'no rights!' }
+    return { error: 'You need to be authenticated to do this action!' }
   }
 }

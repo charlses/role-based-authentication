@@ -54,6 +54,6 @@ export const createCard = async (
     }
     return { success: 'New card created successfully!' }
   } else {
-    return { error: 'No user found!' }
+    return { error: 'You need to be authenticated to do this action!' }
   }
 }

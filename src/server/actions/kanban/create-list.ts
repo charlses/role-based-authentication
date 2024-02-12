@@ -58,6 +58,6 @@ export const createKanbanList = async (
     revalidatePath(`/boards/${boardId}`)
     return { success: 'Kanban list added successfully' }
   } else {
-    return { error: 'No user found!' }
+    return { error: 'You need to be authenticated to do this action!' }
   }
 }

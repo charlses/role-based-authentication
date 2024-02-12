@@ -36,5 +36,7 @@ export const updateBoard = async (
     revalidatePath('/boards')
 
     return { success: 'Board updated successfully!' }
+  } else {
+    return { error: 'You need to be authenticated to do this action!' }
   }
 }

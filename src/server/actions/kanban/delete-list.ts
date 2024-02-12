@@ -26,6 +26,6 @@ export const DeleteListAction = async (id: string, boardId: string) => {
       }
     }
   } else {
-    return { Error: 'No user found!' }
+    return { error: 'You need to be authenticated to do this action!' }
   }
 }
