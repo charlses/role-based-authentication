@@ -13,5 +13,4 @@ export const findBoards = async (userId: string) => {
     })
     return boards
   }
-  return { error: 'No user found!' }
 }
