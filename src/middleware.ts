@@ -46,6 +46,7 @@ export default auth(async (req) => {
       if (role !== 'ADMIN') {
         return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
       }
+      return null
     }
   }
   if (isUserRoute) {
@@ -53,6 +54,7 @@ export default auth(async (req) => {
       if (role !== 'USER' && role === 'ADMIN') {
         return Response.redirect(new URL(DEFAULT_ADMIN_REDIRECT, nextUrl))
       }
+      return null
     }
   }
 

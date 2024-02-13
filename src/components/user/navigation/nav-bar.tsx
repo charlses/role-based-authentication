@@ -1,6 +1,6 @@
 import { MainNav } from './main-nav'
 import { UserNav } from './user-nav'
-import { ModeToggle } from '../theme-toggle'
+import { ModeToggle } from '../../theme-toggle'
 import { SideBar } from './side-bar'
 
 interface NavBarProps {

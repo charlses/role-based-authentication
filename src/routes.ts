@@ -29,7 +29,8 @@ export const adminRoutes = [
   '/admin/settings/',
   '/admin/users',
   '/admin/products',
-  '/admin/products/create'
+  '/admin/products/create',
+  '/admin/products/:id'
 ]
 
 export const apiAuthPrefix = '/api'

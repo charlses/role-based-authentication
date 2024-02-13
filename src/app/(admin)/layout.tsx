@@ -1,4 +1,4 @@
-const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='flex flex-col h-screen justify-center items-center'>
       {children}
@@ -6,4 +6,4 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default AuthLayout
+export default AdminLayout

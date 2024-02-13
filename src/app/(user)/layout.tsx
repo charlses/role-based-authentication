@@ -1,5 +1,5 @@
 import { auth } from '@/auth'
-import { NavBar } from '@/components/navigation/nav-bar'
+import { NavBar } from '@/components/user/navigation/nav-bar'
 
 interface ProtectedLayoutProps {
   children: React.ReactNode
