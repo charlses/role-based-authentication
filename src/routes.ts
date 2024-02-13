@@ -14,6 +14,16 @@ export const authRoutes = [
   '/new-password'
 ]
 
+export const userRoutes = [
+  '/dashboard',
+  '/settings',
+  '/boards',
+  '/boards/:id',
+  '/settings',
+  '/projects',
+  '/projects/:id'
+]
+
 export const adminRoutes = [
   '/admin/dashboard',
   '/admin/settings/',

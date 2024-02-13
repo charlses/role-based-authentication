@@ -24,7 +24,7 @@ export const {
     }
   },
   callbacks: {
-    async signIn({ user, account }) {
+    async signIn({ user, account, profile }) {
       //allows users with Oauth providers to access the page
       if (account?.provider !== 'credentials') return true
 
@@ -57,7 +57,7 @@ export const {
       return true
     },
 
-    async jwt({ token }) {
+    async jwt({ token, user }) {
       if (!token.sub) return token
 
       const existingUser = await getUserById(token.sub)
@@ -67,7 +67,7 @@ export const {
       if (existingUser) {
         token.role = existingUser.role
       }
-      return token
+      return { ...token, ...user }
     },
     async session({ token, session }: { session: Session; token?: any }) {
       if (token.sub && session.user) {

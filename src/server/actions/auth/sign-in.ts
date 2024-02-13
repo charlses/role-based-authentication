@@ -3,7 +3,7 @@
 import * as z from 'zod'
 import { LoginSchema } from '@/schemas'
 import { signIn } from '@/auth'
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
+import { DEFAULT_LOGIN_REDIRECT, DEFAULT_ADMIN_REDIRECT } from '@/routes'
 import { AuthError } from 'next-auth'
 import { generateVerificationToken, generateTwoFactorToken } from '@/lib/tokens'
 import { getUserByEmail } from '@/server/database/user'
@@ -84,11 +84,20 @@ export const signInAction = async (values: z.infer<typeof LoginSchema>) => {
   }
 
   try {
-    await signIn('credentials', {
-      email,
-      password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT
-    })
+    if (existingUser.role === 'ADMIN') {
+      await signIn('credentials', {
+        email,
+        password,
+        redirectTo: DEFAULT_ADMIN_REDIRECT
+      })
+    } else if (existingUser.role === 'USER') {
+      await signIn('credentials', {
+        email,
+        password,
+        redirectTo: DEFAULT_LOGIN_REDIRECT
+      })
+    }
+
     return { success: 'Signed in successfully!' }
   } catch (error) {
     if (error instanceof AuthError)
