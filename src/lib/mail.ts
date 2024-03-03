@@ -2,7 +2,7 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const domain = 'https://charlses-auth.vercel.app'
+const domain = 'https://charlses.com'
 
 export const sendVerificationEmail = async (
   name: string,
